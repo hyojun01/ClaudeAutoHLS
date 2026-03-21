@@ -113,7 +113,7 @@ If Vitis HLS is not in the automated environment, run scripts manually:
 
 ```bash
 cd src/<ip_name>
-vitis_hls -f tcl/run_csim.tcl      # C-simulation
-vitis_hls -f tcl/run_csynth.tcl    # C-synthesis
-vitis_hls -f tcl/run_cosim.tcl     # Co-simulation
+vitis-run --tcl tcl/run_csim.tcl      # C-simulation
+vitis-run --tcl tcl/run_csynth.tcl    # C-synthesis
+vitis-run --tcl tcl/run_cosim.tcl     # Co-simulation
 ```

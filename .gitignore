@@ -1,0 +1,10 @@
+# Generated IP outputs (keep src/.template/)
+src/*/
+!src/.template/
+
+# Generated documentation
+docs/
+
+# Vitis HLS project build artifacts
+proj_*/
+**/proj_*/
