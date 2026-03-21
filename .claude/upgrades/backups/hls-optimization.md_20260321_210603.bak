@@ -99,19 +99,6 @@ for (int i = 0; i < N; i++) {
 }
 ```
 
-### 6. Excessive DSP Usage from Wide Casts in MAC Loops
-**Symptom**: DSP count is 2-4x higher than the number of logical multiplies
-**Root Cause**: Explicit casts to a wide accumulator type before multiplication force HLS to generate wide multiplies (e.g., 45×45) that require multiple DSP48 slices each. DSP48E1 natively supports 25×18; anything wider chains multiple slices.
-**Fix**: Let HLS multiply at natural operand width, then promote the result during accumulation:
-```cpp
-// BAD: casts widen operands before multiply → multiple DSPs per multiply
-acc += (acc_t)coeff * (acc_t)(a + b);
-
-// GOOD: natural-width multiply → 1 DSP each, result promoted on accumulate
-acc += coeff * (a + b);
-```
-**Evidence**: `fir` IP — 23 multiplies at natural width (16×17) = 23 DSPs; same multiplies cast to acc_t (45-bit) = 76 DSPs. Pipeline depth also dropped from 19 to 9 cycles.
-
 ## Optimization Recipes by IP Type
 
 ### Signal Processing (FIR, FFT, Convolution)
