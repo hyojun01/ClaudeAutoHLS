@@ -1,0 +1,201 @@
+
+
+================================================================
+== Synthesis Summary Report of 'fft'
+================================================================
++ General Information: 
+    * Date:           Sun Mar 22 09:38:06 2026
+    * Version:        2025.1 (Build 6135595 on May 21 2025)
+    * Project:        proj_fft
+    * Solution:       sol1 (Vivado IP Flow Target)
+    * Product family: zynq
+    * Target device:  xc7z020-clg400-1
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +----------------------------------------------------+---------+--------+---------+-----------+----------+---------+------+----------+---------+---------+-----------+-----------+-----+
+    |                       Modules                      |  Issue  |        |       Latency       | Iteration|         | Trip |          |         |         |           |           |     |
+    |                       & Loops                      |   Type  |  Slack | (cycles)|    (ns)   |  Latency | Interval| Count| Pipelined|  BRAM   |   DSP   |     FF    |    LUT    | URAM|
+    +----------------------------------------------------+---------+--------+---------+-----------+----------+---------+------+----------+---------+---------+-----------+-----------+-----+
+    |+ fft*                                              |   Timing|  -15.92|     4376|  1.016e+05|         -|     3596|     -|  dataflow|  19 (6%)|  12 (5%)|  462 (~0%)|  1607 (3%)|    -|
+    | + read_and_reorder                                 |        -|    0.79|      520|  5.200e+03|         -|      520|     -|        no|   3 (1%)|        -|   41 (~0%)|  266 (~0%)|    -|
+    |  + read_and_reorder_Pipeline_READ_LOOP             |        -|    2.30|      258|  2.580e+03|         -|      257|     -|    rewind|        -|        -|   21 (~0%)|   76 (~0%)|    -|
+    |   o READ_LOOP                                      |        -|    7.30|      256|  2.560e+03|         2|        1|   256|       yes|        -|        -|          -|          -|    -|
+    |  + read_and_reorder_Pipeline_BIT_REV_LOOP          |        -|    0.79|      258|  2.580e+03|         -|      257|     -|    rewind|  1 (~0%)|        -|   12 (~0%)|   65 (~0%)|    -|
+    |   o BIT_REV_LOOP                                   |        -|    7.30|      256|  2.560e+03|         2|        1|   256|       yes|        -|        -|          -|          -|    -|
+    | + compute_fft                                      |   Timing|  -15.92|     3595|  8.349e+04|         -|     3595|     -|        no|   8 (2%)|  12 (5%)|  368 (~0%)|  1190 (2%)|    -|
+    |  + compute_fft_Pipeline_COPY_IN                    |        -|    0.79|      258|  2.580e+03|         -|      257|     -|    rewind|        -|        -|   21 (~0%)|   65 (~0%)|    -|
+    |   o COPY_IN                                        |        -|    7.30|      256|  2.560e+03|         2|        1|   256|       yes|        -|        -|          -|          -|    -|
+    |  + compute_fft_Pipeline_STAGE_LOOP_BUTTERFLY_LOOP  |   Timing|  -15.92|     3074|  7.139e+04|         -|     3073|     -|    rewind|  2 (~0%)|  12 (5%)|  316 (~0%)|   840 (1%)|    -|
+    |   o STAGE_LOOP_BUTTERFLY_LOOP                      |       II|    7.30|     3072|  7.134e+04|         4|        3|  1024|       yes|        -|        -|          -|          -|    -|
+    |  + compute_fft_Pipeline_COPY_OUT                   |        -|    0.79|      258|  2.580e+03|         -|      257|     -|    rewind|        -|        -|   21 (~0%)|   65 (~0%)|    -|
+    |   o COPY_OUT                                       |        -|    7.30|      256|  2.560e+03|         2|        1|   256|       yes|        -|        -|          -|          -|    -|
+    | + write_output                                     |        -|    2.21|      259|  2.590e+03|         -|      256|     -|    rewind|        -|        -|   15 (~0%)|   83 (~0%)|    -|
+    |  o WRITE_LOOP                                      |        -|    7.30|      257|  2.570e+03|         3|        1|   256|       yes|        -|        -|          -|          -|    -|
+    +----------------------------------------------------+---------+--------+---------+-----------+----------+---------+------+----------+---------+---------+-----------+-----------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* S_AXILITE Interfaces
++---------------+------------+---------------+
+| Interface     | Data Width | Address Width |
++---------------+------------+---------------+
+| s_axi_control | 32         | 4             |
++---------------+------------+---------------+
+
+* S_AXILITE Registers
++---------------+----------+--------+-------+--------+----------------------------------+----------------------------------------------------------------------+
+| Interface     | Register | Offset | Width | Access | Description                      | Bit Fields                                                           |
++---------------+----------+--------+-------+--------+----------------------------------+----------------------------------------------------------------------+
+| s_axi_control | CTRL     | 0x00   | 32    | RW     | Control signals                  | 0=AP_START 1=AP_DONE 2=AP_IDLE 3=AP_READY 7=AUTO_RESTART 9=INTERRUPT |
+| s_axi_control | GIER     | 0x04   | 32    | RW     | Global Interrupt Enable Register | 0=Enable                                                             |
+| s_axi_control | IP_IER   | 0x08   | 32    | RW     | IP Interrupt Enable Register     | 0=CHAN0_INT_EN 1=CHAN1_INT_EN                                        |
+| s_axi_control | IP_ISR   | 0x0c   | 32    | RW     | IP Interrupt Status Register     | 0=CHAN0_INT_ST 1=CHAN1_INT_ST                                        |
++---------------+----------+--------+-------+--------+----------------------------------+----------------------------------------------------------------------+
+
+* AXIS
++-----------+-----------+---------------+-------+-------+-------+--------+-------+--------+
+| Interface | Direction | Register Mode | TDATA | TKEEP | TLAST | TREADY | TSTRB | TVALID |
++-----------+-----------+---------------+-------+-------+-------+--------+-------+--------+
+| in_r      | in        | both          | 32    | 4     | 1     | 1      | 4     | 1      |
+| out_r     | out       | both          | 32    | 4     | 1     | 1      | 4     | 1      |
++-----------+-----------+---------------+-------+-------+-------+--------+-------+--------+
+
+* TOP LEVEL CONTROL
++-----------+------------+-----------+
+| Interface | Type       | Ports     |
++-----------+------------+-----------+
+| ap_clk    | clock      | ap_clk    |
+| ap_rst_n  | reset      | ap_rst_n  |
+| interrupt | interrupt  | interrupt |
+| ap_ctrl   | ap_ctrl_hs |           |
++-----------+------------+-----------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+---------------------------------------------------------+
+| Argument | Direction | Datatype                                                |
++----------+-----------+---------------------------------------------------------+
+| in       | in        | stream<hls::axis<ap_uint<32>, 0, 0, 0, '8', false>, 0>& |
+| out      | out       | stream<hls::axis<ap_uint<32>, 0, 0, 0, '8', false>, 0>& |
++----------+-----------+---------------------------------------------------------+
+
+* SW-to-HW Mapping
++----------+--------------+-----------+
+| Argument | HW Interface | HW Type   |
++----------+--------------+-----------+
+| in       | in_r         | interface |
+| out      | out_r        | interface |
++----------+--------------+-----------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++----------------------------------------------------+-----+--------+----------------+--------+-----------+---------+
+| Name                                               | DSP | Pragma | Variable       | Op     | Impl      | Latency |
++----------------------------------------------------+-----+--------+----------------+--------+-----------+---------+
+| + fft                                              | 12  |        |                |        |           |         |
+|  + read_and_reorder                                | 0   |        |                |        |           |         |
+|   + read_and_reorder_Pipeline_READ_LOOP            | 0   |        |                |        |           |         |
+|     icmp_ln80_fu_112_p2                            |     |        | icmp_ln80      | seteq  | auto      | 0       |
+|     add_ln80_fu_118_p2                             |     |        | add_ln80       | add    | fabric    | 0       |
+|   + read_and_reorder_Pipeline_BIT_REV_LOOP         | 0   |        |                |        |           |         |
+|     icmp_ln92_fu_113_p2                            |     |        | icmp_ln92      | seteq  | auto      | 0       |
+|     add_ln92_fu_119_p2                             |     |        | add_ln92       | add    | fabric    | 0       |
+|  + compute_fft                                     | 12  |        |                |        |           |         |
+|   + compute_fft_Pipeline_COPY_IN                   | 0   |        |                |        |           |         |
+|     icmp_ln104_fu_96_p2                            |     |        | icmp_ln104     | seteq  | auto      | 0       |
+|     add_ln104_fu_102_p2                            |     |        | add_ln104      | add    | fabric    | 0       |
+|   + compute_fft_Pipeline_STAGE_LOOP_BUTTERFLY_LOOP | 12  |        |                |        |           |         |
+|     icmp_ln111_fu_176_p2                           |     |        | icmp_ln111     | seteq  | auto      | 0       |
+|     add_ln111_fu_182_p2                            |     |        | add_ln111      | add    | fabric    | 0       |
+|     icmp_ln117_fu_194_p2                           |     |        | icmp_ln117     | seteq  | auto      | 0       |
+|     select_ln111_fu_200_p3                         |     |        | select_ln111   | select | auto_sel  | 0       |
+|     add_ln113_fu_208_p2                            |     |        | add_ln113      | add    | fabric    | 0       |
+|     add_ln113_1_fu_214_p2                          |     |        | add_ln113_1    | add    | fabric    | 0       |
+|     select_ln111_1_fu_298_p3                       |     |        | select_ln111_1 | select | auto_sel  | 0       |
+|     select_ln111_2_fu_220_p3                       |     |        | select_ln111_2 | select | auto_sel  | 0       |
+|     half_fu_236_p2                                 |     |        | half           | shl    | auto_pipe | 0       |
+|     tw_stride_fu_246_p2                            |     |        | tw_stride      | lshr   | auto_pipe | 0       |
+|     group_fu_309_p2                                |     |        | group          | lshr   | auto_pipe | 0       |
+|     add_ln120_fu_264_p2                            |     |        | add_ln120      | add    | fabric    | 0       |
+|     tw_idx_fu_276_p0                               |     |        | pos            | and    | auto      | 0       |
+|     shl_ln121_fu_322_p2                            |     |        | shl_ln121      | shl    | auto_pipe | 0       |
+|     even_idx_fu_328_p2                             |     |        | even_idx       | add    | fabric    | 0       |
+|     odd_idx_fu_334_p2                              |     |        | odd_idx        | add    | fabric    | 0       |
+|     mul_7s_7s_7_1_1_U31                            |     |        | tw_idx         | mul    | auto      | 0       |
+|     mul_45s_16s_60_1_1_U27                         | 3   |        | mul_ln134      | mul    | auto      | 0       |
+|     mul_45s_16s_60_1_1_U28                         | 3   |        | mul_ln134_1    | mul    | auto      | 0       |
+|     sub_ln134_fu_383_p2                            |     |        | sub_ln134      | sub    | fabric    | 0       |
+|     mul_45s_16s_60_1_1_U29                         | 3   |        | mul_ln135      | mul    | auto      | 0       |
+|     mul_45s_16s_60_1_1_U30                         | 3   |        | mul_ln135_1    | mul    | auto      | 0       |
+|     add_ln135_fu_399_p2                            |     |        | add_ln135      | add    | fabric    | 0       |
+|     add_ln142_fu_415_p2                            |     |        | add_ln142      | add    | fabric    | 0       |
+|     add_ln143_fu_422_p2                            |     |        | add_ln143      | add    | fabric    | 0       |
+|     sub_ln144_fu_429_p2                            |     |        | sub_ln144      | sub    | fabric    | 0       |
+|     sub_ln145_fu_434_p2                            |     |        | sub_ln145      | sub    | fabric    | 0       |
+|     j_1_fu_351_p2                                  |     |        | j_1            | add    | fabric    | 0       |
+|   + compute_fft_Pipeline_COPY_OUT                  | 0   |        |                |        |           |         |
+|     icmp_ln151_fu_96_p2                            |     |        | icmp_ln151     | seteq  | auto      | 0       |
+|     add_ln151_fu_102_p2                            |     |        | add_ln151      | add    | fabric    | 0       |
+|  + write_output                                    | 0   |        |                |        |           |         |
+|    pkt_last_fu_124_p2                              |     |        | pkt_last       | seteq  | auto      | 0       |
+|    i_fu_130_p2                                     |     |        | i              | add    | fabric    | 0       |
++----------------------------------------------------+-----+--------+----------------+--------+-----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
++----------------------------------------------------+----------------+-----------+------+------+--------+---------------+------+---------+------------------+
+| Name                                               | Usage          | Type      | BRAM | URAM | Pragma | Variable      | Impl | Latency | Bitwidth, Depth, |
+|                                                    |                |           |      |      |        |               |      |         | Banks            |
++----------------------------------------------------+----------------+-----------+------+------+--------+---------------+------+---------+------------------+
+| + fft                                              |                |           | 19   | 0    |        |               |      |         |                  |
+|   control_s_axi_U                                  | interface      | s_axilite |      |      |        |               |      |         |                  |
+|   buf_in_real_U                                    | ram_1p channel | pipo      | 1    |      |        | buf_in_real   | auto | 1       | 31, 256, 2       |
+|   buf_in_imag_U                                    | ram_1p channel | pipo      | 1    |      |        | buf_in_imag   | auto | 1       | 31, 256, 2       |
+|   buf_out_real_U                                   | ram_1p channel | pipo      | 1    |      |        | buf_out_real  | auto | 1       | 31, 256, 2       |
+|   buf_out_imag_U                                   | ram_1p channel | pipo      | 1    |      |        | buf_out_imag  | auto | 1       | 31, 256, 2       |
+|  + read_and_reorder                                |                |           | 3    | 0    |        |               |      |         |                  |
+|    temp_real_U                                     | ram_1p array   |           | 2    |      |        | temp_real     | auto | 1       | 31, 256, 1       |
+|    temp_imag_U                                     | ram_1p array   |           | 2    |      |        | temp_imag     | auto | 1       | 31, 256, 1       |
+|   + read_and_reorder_Pipeline_BIT_REV_LOOP         |                |           | 1    | 0    |        |               |      |         |                  |
+|     bit_rev_table_U                                | rom_1p         |           | 1    |      |        | bit_rev_table | auto | 1       | 8, 256, 1        |
+|  + compute_fft                                     |                |           | 8    | 0    |        |               |      |         |                  |
+|    X_real_U                                        | ram_t2p array  |           | 3    |      |        | X_real        | auto | 1       | 45, 256, 1       |
+|    X_imag_U                                        | ram_t2p array  |           | 3    |      |        | X_imag        | auto | 1       | 45, 256, 1       |
+|   + compute_fft_Pipeline_STAGE_LOOP_BUTTERFLY_LOOP |                |           | 2    | 0    |        |               |      |         |                  |
+|     tw_real_U                                      | rom_1p         |           | 1    |      |        | tw_real       | auto | 1       | 16, 128, 1       |
+|     tw_imag_U                                      | rom_1p         |           | 1    |      |        | tw_imag       | auto | 1       | 16, 128, 1       |
++----------------------------------------------------+----------------+-----------+------+------+--------+---------------+------+---------+------------------+
+
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++-----------+-----------------------+------------------------------------+
+| Type      | Options               | Location                           |
++-----------+-----------------------+------------------------------------+
+| PIPELINE  | ii=1                  | src/fft.cpp:81 in read_and_reorder |
+| PIPELINE  | ii=1                  | src/fft.cpp:93 in read_and_reorder |
+| PIPELINE  | ii=1                  | src/fft.cpp:105 in compute_fft     |
+| PIPELINE  | ii=1                  | src/fft.cpp:118 in compute_fft     |
+| PIPELINE  | ii=1                  | src/fft.cpp:152 in compute_fft     |
+| PIPELINE  | ii=1                  | src/fft.cpp:161 in write_output    |
+| INTERFACE | axis port=in          | src/fft.cpp:189 in fft, in         |
+| INTERFACE | axis port=out         | src/fft.cpp:190 in fft, out        |
+| INTERFACE | s_axilite port=return | src/fft.cpp:191 in fft, return     |
+| DATAFLOW  |                       | src/fft.cpp:194 in fft             |
++-----------+-----------------------+------------------------------------+
+
+

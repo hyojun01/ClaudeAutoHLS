@@ -1,0 +1,235 @@
+
+
+================================================================
+== Vitis HLS Report for 'fft'
+================================================================
+* Date:           Sun Mar 22 10:29:34 2026
+
+* Version:        2025.1 (Build 6135595 on May 21 2025)
+* Project:        proj_fft
+* Solution:       sol1 (Vivado IP Flow Target)
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  |  10.00 ns|  7.202 ns|     2.70 ns|
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+-----------+-----+-----+----------+
+    |  Latency (cycles) |   Latency (absolute)  |  Interval | Pipeline |
+    |   min   |   max   |    min    |    max    | min | max |   Type   |
+    +---------+---------+-----------+-----------+-----+-----+----------+
+    |     1598|     1598|  15.980 us|  15.980 us|  256|  256|  dataflow|
+    +---------+---------+-----------+-----------+-----+-----+----------+
+
+    + Detail: 
+        * Instance: 
+        +----------------------+---------------------+---------+---------+----------+----------+-----+-----+------------------------------------------------+
+        |                      |                     |  Latency (cycles) |  Latency (absolute) |  Interval |                    Pipeline                    |
+        |       Instance       |        Module       |   min   |   max   |    min   |    max   | min | max |                      Type                      |
+        +----------------------+---------------------+---------+---------+----------+----------+-----+-----+------------------------------------------------+
+        |read_and_reorder_U0   |read_and_reorder     |      258|      258|  2.580 us|  2.580 us|  256|  256|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |butterfly_stage_0_U0  |butterfly_stage_0_s  |      134|      134|  1.340 us|  1.340 us|  128|  128|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |butterfly_stage_1_U0  |butterfly_stage_1_s  |      134|      134|  1.340 us|  1.340 us|  128|  128|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |butterfly_stage_2_U0  |butterfly_stage_2_s  |      134|      134|  1.340 us|  1.340 us|  128|  128|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |butterfly_stage_3_U0  |butterfly_stage_3_s  |      134|      134|  1.340 us|  1.340 us|  128|  128|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |butterfly_stage_4_U0  |butterfly_stage_4_s  |      134|      134|  1.340 us|  1.340 us|  128|  128|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |butterfly_stage_5_U0  |butterfly_stage_5_s  |      134|      134|  1.340 us|  1.340 us|  128|  128|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |butterfly_stage_6_U0  |butterfly_stage_6_s  |      134|      134|  1.340 us|  1.340 us|  128|  128|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |butterfly_stage_7_U0  |butterfly_stage_7_s  |      134|      134|  1.340 us|  1.340 us|  128|  128|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |write_output_U0       |write_output         |      259|      259|  2.590 us|  2.590 us|  256|  256|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        +----------------------+---------------------+---------+---------+----------+----------+-----+-----+------------------------------------------------+
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+-----+--------+-------+-----+
+|       Name      | BRAM_18K| DSP |   FF   |  LUT  | URAM|
++-----------------+---------+-----+--------+-------+-----+
+|DSP              |        -|    -|       -|      -|    -|
+|Expression       |        -|    -|       0|     38|    -|
+|FIFO             |        -|    -|       -|      -|    -|
+|Instance         |       15|   80|    4689|   5398|    -|
+|Memory           |       92|    -|       0|      0|    0|
+|Multiplexer      |        -|    -|       0|     81|    -|
+|Register         |        -|    -|       9|      -|    -|
++-----------------+---------+-----+--------+-------+-----+
+|Total            |      107|   80|    4698|   5517|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Available        |      280|  220|  106400|  53200|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Utilization (%)  |       38|   36|       4|     10|    0|
++-----------------+---------+-----+--------+-------+-----+
+
++ Detail: 
+    * Instance: 
+    +----------------------+---------------------+---------+----+-----+-----+-----+
+    |       Instance       |        Module       | BRAM_18K| DSP|  FF | LUT | URAM|
+    +----------------------+---------------------+---------+----+-----+-----+-----+
+    |butterfly_stage_0_U0  |butterfly_stage_0_s  |        0|   4|  477|  446|    0|
+    |butterfly_stage_1_U0  |butterfly_stage_1_s  |        2|   8|  561|  642|    0|
+    |butterfly_stage_2_U0  |butterfly_stage_2_s  |        2|   8|  587|  698|    0|
+    |butterfly_stage_3_U0  |butterfly_stage_3_s  |        2|  12|  605|  698|    0|
+    |butterfly_stage_4_U0  |butterfly_stage_4_s  |        2|  12|  605|  698|    0|
+    |butterfly_stage_5_U0  |butterfly_stage_5_s  |        2|  12|  605|  698|    0|
+    |butterfly_stage_6_U0  |butterfly_stage_6_s  |        2|  12|  605|  698|    0|
+    |butterfly_stage_7_U0  |butterfly_stage_7_s  |        2|  12|  549|  614|    0|
+    |control_s_axi_U       |control_s_axi        |        0|   0|   36|   40|    0|
+    |read_and_reorder_U0   |read_and_reorder     |        1|   0|   44|   83|    0|
+    |write_output_U0       |write_output         |        0|   0|   15|   83|    0|
+    +----------------------+---------------------+---------+----+-----+-----+-----+
+    |Total                 |                     |       15|  80| 4689| 5398|    0|
+    +----------------------+---------------------+---------+----+-----+-----+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    +-----------+-----------------------+---------+---+----+-----+------+-----+------+-------------+
+    |   Memory  |         Module        | BRAM_18K| FF| LUT| URAM| Words| Bits| Banks| W*Bits*Banks|
+    +-----------+-----------------------+---------+---+----+-----+------+-----+------+-------------+
+    |buf0_re_U  |buf0_re_RAM_AUTO_1R1W  |        4|  0|   0|    0|   256|   31|     1|         7936|
+    |buf0_im_U  |buf0_re_RAM_AUTO_1R1W  |        4|  0|   0|    0|   256|   31|     1|         7936|
+    |buf1_re_U  |buf1_re_RAM_AUTO_1R1W  |        4|  0|   0|    0|   256|   33|     1|         8448|
+    |buf1_im_U  |buf1_re_RAM_AUTO_1R1W  |        4|  0|   0|    0|   256|   33|     1|         8448|
+    |buf2_re_U  |buf2_re_RAM_AUTO_1R1W  |        4|  0|   0|    0|   256|   36|     1|         9216|
+    |buf2_im_U  |buf2_re_RAM_AUTO_1R1W  |        4|  0|   0|    0|   256|   36|     1|         9216|
+    |buf3_re_U  |buf3_re_RAM_AUTO_1R1W  |        6|  0|   0|    0|   256|   45|     1|        11520|
+    |buf3_im_U  |buf3_re_RAM_AUTO_1R1W  |        6|  0|   0|    0|   256|   45|     1|        11520|
+    |buf4_re_U  |buf3_re_RAM_AUTO_1R1W  |        6|  0|   0|    0|   256|   45|     1|        11520|
+    |buf4_im_U  |buf3_re_RAM_AUTO_1R1W  |        6|  0|   0|    0|   256|   45|     1|        11520|
+    |buf5_re_U  |buf3_re_RAM_AUTO_1R1W  |        6|  0|   0|    0|   256|   45|     1|        11520|
+    |buf5_im_U  |buf3_re_RAM_AUTO_1R1W  |        6|  0|   0|    0|   256|   45|     1|        11520|
+    |buf6_re_U  |buf3_re_RAM_AUTO_1R1W  |        6|  0|   0|    0|   256|   45|     1|        11520|
+    |buf6_im_U  |buf3_re_RAM_AUTO_1R1W  |        6|  0|   0|    0|   256|   45|     1|        11520|
+    |buf7_re_U  |buf3_re_RAM_AUTO_1R1W  |        6|  0|   0|    0|   256|   45|     1|        11520|
+    |buf7_im_U  |buf3_re_RAM_AUTO_1R1W  |        6|  0|   0|    0|   256|   45|     1|        11520|
+    |buf8_re_U  |buf8_re_RAM_AUTO_1R1W  |        4|  0|   0|    0|   256|   31|     1|         7936|
+    |buf8_im_U  |buf8_re_RAM_AUTO_1R1W  |        4|  0|   0|    0|   256|   31|     1|         7936|
+    +-----------+-----------------------+---------+---+----+-----+------+-----+------+-------------+
+    |Total      |                       |       92|  0|   0|    0|  4608|  712|    18|       182272|
+    +-----------+-----------------------+---------+---+----+-----+------+-----+------+-------------+
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +-------------------------------+----------+----+---+----+------------+------------+
+    |         Variable Name         | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +-------------------------------+----------+----+---+----+------------+------------+
+    |ap_channel_done_buf0_im        |       and|   0|  0|   2|           1|           1|
+    |ap_channel_done_buf1_im        |       and|   0|  0|   2|           1|           1|
+    |ap_channel_done_buf2_im        |       and|   0|  0|   2|           1|           1|
+    |ap_channel_done_buf3_im        |       and|   0|  0|   2|           1|           1|
+    |ap_channel_done_buf4_im        |       and|   0|  0|   2|           1|           1|
+    |ap_channel_done_buf5_im        |       and|   0|  0|   2|           1|           1|
+    |ap_channel_done_buf6_im        |       and|   0|  0|   2|           1|           1|
+    |ap_channel_done_buf7_im        |       and|   0|  0|   2|           1|           1|
+    |ap_channel_done_buf8_im        |       and|   0|  0|   2|           1|           1|
+    |ap_idle                        |       and|   0|  0|   2|           1|           1|
+    |ap_sync_channel_write_buf0_im  |        or|   0|  0|   2|           1|           1|
+    |ap_sync_channel_write_buf1_im  |        or|   0|  0|   2|           1|           1|
+    |ap_sync_channel_write_buf2_im  |        or|   0|  0|   2|           1|           1|
+    |ap_sync_channel_write_buf3_im  |        or|   0|  0|   2|           1|           1|
+    |ap_sync_channel_write_buf4_im  |        or|   0|  0|   2|           1|           1|
+    |ap_sync_channel_write_buf5_im  |        or|   0|  0|   2|           1|           1|
+    |ap_sync_channel_write_buf6_im  |        or|   0|  0|   2|           1|           1|
+    |ap_sync_channel_write_buf7_im  |        or|   0|  0|   2|           1|           1|
+    |ap_sync_channel_write_buf8_im  |        or|   0|  0|   2|           1|           1|
+    +-------------------------------+----------+----+---+----+------------+------------+
+    |Total                          |          |   0|  0|  38|          19|          19|
+    +-------------------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +-----------------------------------+----+-----------+-----+-----------+
+    |                Name               | LUT| Input Size| Bits| Total Bits|
+    +-----------------------------------+----+-----------+-----+-----------+
+    |ap_sync_reg_channel_write_buf0_im  |   9|          2|    1|          2|
+    |ap_sync_reg_channel_write_buf1_im  |   9|          2|    1|          2|
+    |ap_sync_reg_channel_write_buf2_im  |   9|          2|    1|          2|
+    |ap_sync_reg_channel_write_buf3_im  |   9|          2|    1|          2|
+    |ap_sync_reg_channel_write_buf4_im  |   9|          2|    1|          2|
+    |ap_sync_reg_channel_write_buf5_im  |   9|          2|    1|          2|
+    |ap_sync_reg_channel_write_buf6_im  |   9|          2|    1|          2|
+    |ap_sync_reg_channel_write_buf7_im  |   9|          2|    1|          2|
+    |ap_sync_reg_channel_write_buf8_im  |   9|          2|    1|          2|
+    +-----------------------------------+----+-----------+-----+-----------+
+    |Total                              |  81|         18|    9|         18|
+    +-----------------------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +-----------------------------------+---+----+-----+-----------+
+    |                Name               | FF| LUT| Bits| Const Bits|
+    +-----------------------------------+---+----+-----+-----------+
+    |ap_sync_reg_channel_write_buf0_im  |  1|   0|    1|          0|
+    |ap_sync_reg_channel_write_buf1_im  |  1|   0|    1|          0|
+    |ap_sync_reg_channel_write_buf2_im  |  1|   0|    1|          0|
+    |ap_sync_reg_channel_write_buf3_im  |  1|   0|    1|          0|
+    |ap_sync_reg_channel_write_buf4_im  |  1|   0|    1|          0|
+    |ap_sync_reg_channel_write_buf5_im  |  1|   0|    1|          0|
+    |ap_sync_reg_channel_write_buf6_im  |  1|   0|    1|          0|
+    |ap_sync_reg_channel_write_buf7_im  |  1|   0|    1|          0|
+    |ap_sync_reg_channel_write_buf8_im  |  1|   0|    1|          0|
+    +-----------------------------------+---+----+-----+-----------+
+    |Total                              |  9|   0|    9|          0|
+    +-----------------------------------+---+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-----------------------+-----+-----+------------+----------------+--------------+
+|       RTL Ports       | Dir | Bits|  Protocol  |  Source Object |    C Type    |
++-----------------------+-----+-----+------------+----------------+--------------+
+|s_axi_control_AWVALID  |   in|    1|       s_axi|         control|   return void|
+|s_axi_control_AWREADY  |  out|    1|       s_axi|         control|   return void|
+|s_axi_control_AWADDR   |   in|    4|       s_axi|         control|   return void|
+|s_axi_control_WVALID   |   in|    1|       s_axi|         control|   return void|
+|s_axi_control_WREADY   |  out|    1|       s_axi|         control|   return void|
+|s_axi_control_WDATA    |   in|   32|       s_axi|         control|   return void|
+|s_axi_control_WSTRB    |   in|    4|       s_axi|         control|   return void|
+|s_axi_control_ARVALID  |   in|    1|       s_axi|         control|   return void|
+|s_axi_control_ARREADY  |  out|    1|       s_axi|         control|   return void|
+|s_axi_control_ARADDR   |   in|    4|       s_axi|         control|   return void|
+|s_axi_control_RVALID   |  out|    1|       s_axi|         control|   return void|
+|s_axi_control_RREADY   |   in|    1|       s_axi|         control|   return void|
+|s_axi_control_RDATA    |  out|   32|       s_axi|         control|   return void|
+|s_axi_control_RRESP    |  out|    2|       s_axi|         control|   return void|
+|s_axi_control_BVALID   |  out|    1|       s_axi|         control|   return void|
+|s_axi_control_BREADY   |   in|    1|       s_axi|         control|   return void|
+|s_axi_control_BRESP    |  out|    2|       s_axi|         control|   return void|
+|ap_clk                 |   in|    1|  ap_ctrl_hs|             fft|  return value|
+|ap_rst_n               |   in|    1|  ap_ctrl_hs|             fft|  return value|
+|interrupt              |  out|    1|  ap_ctrl_hs|             fft|  return value|
+|in_r_TDATA             |   in|   32|        axis|   in_r_V_data_V|       pointer|
+|in_r_TKEEP             |   in|    4|        axis|   in_r_V_keep_V|       pointer|
+|in_r_TSTRB             |   in|    4|        axis|   in_r_V_strb_V|       pointer|
+|in_r_TLAST             |   in|    1|        axis|   in_r_V_last_V|       pointer|
+|in_r_TVALID            |   in|    1|        axis|   in_r_V_last_V|       pointer|
+|in_r_TREADY            |  out|    1|        axis|   in_r_V_last_V|       pointer|
+|out_r_TDATA            |  out|   32|        axis|  out_r_V_data_V|       pointer|
+|out_r_TKEEP            |  out|    4|        axis|  out_r_V_keep_V|       pointer|
+|out_r_TSTRB            |  out|    4|        axis|  out_r_V_strb_V|       pointer|
+|out_r_TLAST            |  out|    1|        axis|  out_r_V_last_V|       pointer|
+|out_r_TVALID           |  out|    1|        axis|  out_r_V_last_V|       pointer|
+|out_r_TREADY           |   in|    1|        axis|  out_r_V_last_V|       pointer|
++-----------------------+-----+-----+------------+----------------+--------------+
+
