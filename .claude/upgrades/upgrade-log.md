@@ -43,3 +43,39 @@ Entries are append-only. Never delete or modify existing entries.
 - **Approved by**: User
 - **Backup**: `.claude/upgrades/backups/hls-coding.md_20260322_*.bak`
 - **Rollback**: Remove "### Common Pitfalls" section (between "Forbidden Constructs" and "Allowed Constructs") from `.claude/rules/hls-coding.md`
+
+## [UPG-0003] Add DATAFLOW PIPO BRAM-to-LUTRAM pattern — 2026-03-22
+- **Status**: Applied
+- **Trigger**: During `fft` optimization (v1.2), PIPO buffers consumed 107 BRAM. BIND_STORAGE with lutram reduced BRAM to 15 (86% reduction).
+- **Target**: `.claude/skills/hls-optimization.md`
+- **Category**: Additive skill
+- **Priority**: HIGH
+- **Session**: fft / optimize-ip
+- **Summary**: Added "### 7. Excessive BRAM from DATAFLOW PIPO Buffers" pattern with BIND_STORAGE impl=lutram technique and trade-off guidance.
+- **Approved by**: User
+- **Backup**: `.claude/upgrades/backups/hls-optimization.md_20260322_*.bak`
+- **Rollback**: Remove section "### 7. Excessive BRAM from DATAFLOW PIPO Buffers" from `.claude/skills/hls-optimization.md`
+
+## [UPG-0004] Add DSP48 native width operand sizing pattern — 2026-03-22
+- **Status**: Applied
+- **Trigger**: During `fft` optimization (v1.3), narrowing acc_t from 45 to 25 bits reduced DSP from 80 to 30 by fitting each multiply in a single DSP48E1 (25×18 native).
+- **Target**: `.claude/skills/hls-optimization.md`
+- **Category**: Additive skill
+- **Priority**: HIGH
+- **Session**: fft / optimize-ip
+- **Summary**: Added "### 8. DSP Chaining from Operands Exceeding DSP48 Native Width" with operand sizing rules and device-specific DSP width table (7-series, UltraScale, Versal).
+- **Approved by**: User
+- **Backup**: `.claude/upgrades/backups/hls-optimization.md_20260322_*.bak`
+- **Rollback**: Remove section "### 8. DSP Chaining from Operands Exceeding DSP48 Native Width" from `.claude/skills/hls-optimization.md`
+
+## [UPG-0005] Add fabric multiply latency pitfall — 2026-03-22
+- **Status**: Applied
+- **Trigger**: During `fft` optimization (v1.2 attempt), `BIND_OP impl=fabric latency=3` failed to pipeline a 60-bit multiply — 13.3 ns combo delay caused timing violation and 133% LUT utilization.
+- **Target**: `.claude/rules/hls-coding.md`
+- **Category**: Rule refinement
+- **Priority**: HIGH
+- **Session**: fft / optimize-ip
+- **Summary**: Added fabric multiply latency pitfall to "### Common Pitfalls" — BIND_OP impl=fabric latency=N only adds output registers, does not pipeline internal logic.
+- **Approved by**: User
+- **Backup**: `.claude/upgrades/backups/hls-coding.md_20260322_*.bak`
+- **Rollback**: Remove the "BIND_OP impl=fabric latency=N" bullet from "### Common Pitfalls" in `.claude/rules/hls-coding.md`

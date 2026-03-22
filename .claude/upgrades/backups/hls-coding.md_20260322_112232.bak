@@ -21,12 +21,6 @@
   - BAD:  `ap_fixed<16,1> tw = 1.0;`  (silently becomes -1.0)
   - GOOD: `ap_fixed<16,1> tw = 0.9999694824;`  (max representable positive value)
   - GOOD: `ap_fixed<16,1,AP_RND,AP_SAT> tw = 1.0;`  (saturates to +0.9999694824)
-- **`BIND_OP impl=fabric latency=N` does NOT pipeline fabric logic**: The `latency` parameter on `BIND_OP impl=fabric` only adds output registers after the combinational logic — it does NOT break the combinational path into pipeline stages. A wide multiply (e.g., 60-bit) implemented in fabric remains a single combinational blob with a long critical path, typically causing both a timing violation and a LUT explosion.
-  - **Rule**: Never use `BIND_OP impl=fabric` for wide multiplies (operands > 20 bits) when timing is constrained. The fabric implementation is only safe for narrow multiplies where the combinational delay fits within one clock cycle.
-  - **Rule**: If DSP resources are constrained, first narrow the operand widths (see optimization skill, pattern #8) rather than moving wide multiplies to fabric.
-  - BAD:  `#pragma HLS BIND_OP variable=result op=mul impl=fabric latency=3`  (60-bit multiply: 13.3 ns combo delay, timing violation)
-  - GOOD: `#pragma HLS BIND_OP variable=result op=mul impl=dsp latency=3`  (DSP handles pipelining internally)
-  - GOOD: Narrow operands to fit 1 DSP, then keep `impl=dsp` (see optimization skill, pattern #8)
 
 ### Allowed Constructs
 - Fixed-size arrays: `int arr[256];`

@@ -112,43 +112,6 @@ acc += coeff * (a + b);
 ```
 **Evidence**: `fir` IP — 23 multiplies at natural width (16×17) = 23 DSPs; same multiplies cast to acc_t (45-bit) = 76 DSPs. Pipeline depth also dropped from 19 to 9 cycles.
 
-### 7. Excessive BRAM from DATAFLOW PIPO Buffers
-**Symptom**: BRAM usage exceeds budget in a DATAFLOW design; synthesis report shows PIPO (ping-pong) buffers consuming most BRAM
-**Root Cause**: Vitis HLS implements DATAFLOW inter-task buffers as BRAM-based ping-pong memories by default. Each array passed between DATAFLOW stages becomes a PIPO buffer using 1+ BRAM blocks.
-**Fix**: Convert PIPO buffers to distributed RAM (LUTRAM) using BIND_STORAGE. Add the pragma immediately after each buffer declaration inside the DATAFLOW top function:
-```cpp
-// In the DATAFLOW top function, after each inter-stage buffer declaration:
-data_t buf_stage1[N];
-#pragma HLS BIND_STORAGE variable=buf_stage1 type=ram_s2p impl=lutram
-
-data_t buf_stage2[N];
-#pragma HLS BIND_STORAGE variable=buf_stage2 type=ram_s2p impl=lutram
-```
-**Trade-off**: LUTRAM uses LUT/FF resources instead of BRAM. Verify LUT budget after conversion. This technique is favorable when BRAM savings are large (>50%) and post-conversion LUT usage stays below ~60% of the target device.
-**Evidence**: `fft` IP — 18 PIPO buffers converted from BRAM to LUTRAM. BRAM: 107 → 15 (86% reduction). LUT: 5,517 → 18,437 (34.7%, within budget on xc7z020).
-
-### 8. DSP Chaining from Operands Exceeding DSP48 Native Width
-**Symptom**: DSP count is 2-4x higher than the number of logical multiplies, even without wide casts (see pattern #6)
-**Root Cause**: The accumulator or operand type is wider than the DSP slice's native multiplier. On 7-series / Zynq-7000 (DSP48E1), the native multiplier is **25×18 bits** (signed). When operand A exceeds 25 bits or operand B exceeds 18 bits, HLS splits the multiply across multiple DSP slices.
-**Fix**: Size operand types so that `A ≤ 25 bits` and `B ≤ 18 bits` (including the sign bit for signed types):
-```cpp
-// BAD: 45-bit accumulator used as multiply operand → chained DSPs
-typedef ap_fixed<45, 15> acc_t;   // 45 bits > 25 → multi-DSP
-typedef ap_fixed<16, 1>  tw_t;    // 16 bits ≤ 18 ✓
-acc_t result = acc * tw;          // 45 × 16 → 2+ DSPs per multiply
-
-// GOOD: narrow accumulator fits DSP48E1 A-port
-typedef ap_fixed<25, 10> acc_t;   // 25 bits ≤ 25 ✓
-typedef ap_fixed<16, 1>  tw_t;    // 16 bits ≤ 18 ✓
-acc_t result = acc * tw;          // 25 × 16 → exactly 1 DSP per multiply
-```
-**Design rule**: When choosing operand widths, consult the target device's DSP native multiplier size:
-  - **7-series / Zynq-7000 (DSP48E1)**: 25 × 18 (signed)
-  - **UltraScale / UltraScale+ (DSP48E2)**: 27 × 18 (signed)
-  - **Versal (DSP58)**: 27 × 24 (signed)
-**Note**: This pattern differs from pattern #6 (wide casts). Pattern #6 addresses unnecessary widening *before* multiplication via explicit casts. This pattern addresses fundamental operand *type definitions* being too wide for the target DSP architecture.
-**Evidence**: `fft` IP — accumulator narrowed from `ap_fixed<45,15>` (45 bits) to `ap_fixed<25,10>` (25 bits), twiddle factor kept at `ap_fixed<16,1>` (16 bits). DSP: 80 → 30 (63% reduction). Each butterfly multiply uses exactly 1 DSP48E1.
-
 ## Optimization Recipes by IP Type
 
 ### Signal Processing (FIR, FFT, Convolution)
