@@ -43,6 +43,24 @@
 - Maximum 5 upgrade proposals per session to prevent upgrade fatigue
 - See `.claude/rules/upgrade-governance.md` for full governance rules
 
+## Mailbox Protocol
+
+When the user provides an IP name for /design-ip or /optimize-ip:
+1. First check if mailbox/approved/<ip_name>/ contains instruction.md
+2. If found, copy to src/<ip_name>/instruction.md (create dir structure if needed)
+3. Similarly for optimization.md
+4. Proceed with the standard /design-ip or /optimize-ip pipeline
+5. After completion, write results to mailbox/results/<ip_name>/ using the
+   templates in scripts/templates/mailbox/:
+   - status.md (from scripts/templates/mailbox/status.md)
+   - synthesis_summary.md (from scripts/templates/mailbox/synthesis_summary.md)
+   - issues.md (from scripts/templates/mailbox/issues.md) — only if problems occurred
+
+### Template Rules
+- ALWAYS read the corresponding template in scripts/templates/mailbox/ before
+  writing any result file
+- Generated documents must follow the template's section structure exactly
+
 ## Communication
 - Agents communicate via structured plans and reports
 - Use specific file paths in all references
