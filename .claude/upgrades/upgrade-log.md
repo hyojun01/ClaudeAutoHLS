@@ -115,3 +115,15 @@ Entries are append-only. Never delete or modify existing entries.
 - **Approved by**: User
 - **Backup**: `.claude/upgrades/backups/hls-synth-sim.md_20260323_173739.bak`
 - **Rollback**: Remove "### Shell Execution" section (between "### Execution" and "### Solution Comparison") from `.claude/skills/hls-synth-sim.md`
+
+## [UPG-0009] Add HLS infrastructure overhead factor to resource estimation — 2026-03-23
+- **Status**: Applied
+- **Trigger**: During `cfar_detector` review, LUT estimate was 2.66× below actual (650 vs 1,729) and FF 1.48× below (1,720 vs 2,550). HLS pipeline control, AXI adapter decode logic, and FSM encoding dominated the small IP's resource profile.
+- **Target**: `.claude/skills/fpga-system-design.md`
+- **Category**: Additive skill
+- **Priority**: MEDIUM
+- **Session**: cfar_detector / review-results
+- **Summary**: Added Step 6 "Apply HLS infrastructure overhead factor" to resource estimation methodology with LUT/FF multipliers (2–2.5× for small IPs, 1.2–1.5× for large) and DSP cascade formula for wide unsigned multiplies. Added AXI-Lite per-register scaling note to interface overhead table.
+- **Approved by**: User
+- **Backup**: `.claude/upgrades/backups/fpga-system-design.md_20260323_cfar.bak`
+- **Rollback**: Remove Step 6 block and AXI-Lite scaling note from `.claude/skills/fpga-system-design.md`; renumber Step 7 back to Step 6

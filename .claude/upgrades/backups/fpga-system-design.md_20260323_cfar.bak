@@ -97,12 +97,6 @@ When estimating total resource usage, add interface overhead separately:
 Multiple s_axilite ports sharing one bundle = one overhead instance.
 Each m_axi bundle incurs its own overhead regardless of number of ports using it.
 
-Note: AXI-Lite overhead scales with the number of registers in the bundle.
-The ~230 LUT figure is the base adapter cost; add ~30–50 LUT per additional
-register for address decode and read-back mux logic. A bundle with 4+ registers
-typically totals 350–500 LUT. The full adapter includes address decode,
-read-back mux, write arbitration, and protocol FSM — not just register storage.
-
 ## 2. Data Flow Architecture Patterns
 
 ### Pattern Selection
@@ -313,24 +307,7 @@ Example: 45-tap FIR, input Q1.15, coeff Q1.15:
    → LUT_total = LUT_datapath + LUT_interface + LUT_control (100-300 for FSM/sequencing)
    → FF_total = FF_datapath + FF_interface + FF_pipeline
 
-6. Apply HLS infrastructure overhead factor:
-   The steps above estimate core datapath + interface adapter logic.
-   Vitis HLS adds additional resources for pipeline control, valid/ready
-   propagation, multi-cycle operation scheduling, and FSM encoding.
-   Apply a multiplier based on core LUT estimate:
-
-   → Core LUT < 2,000:     multiply LUT/FF totals by 2.0–2.5×
-   → Core LUT 2,000–10,000: multiply LUT/FF totals by 1.5–2.0×
-   → Core LUT > 10,000:    multiply LUT/FF totals by 1.2–1.5×
-
-   DSP and BRAM estimates are not affected (HLS does not add infrastructure DSP/BRAM).
-
-   For pipelined multiplies wider than the DSP48 native width:
-     7-series unsigned: DSPs = ceil(A_bits / 24) × ceil(B_bits / 17)
-     7-series signed:   DSPs = ceil(A_bits / 25) × ceil(B_bits / 18)
-     UltraScale signed: DSPs = ceil(A_bits / 27) × ceil(B_bits / 18)
-
-7. Check against device budget:
+6. Check against device budget:
    → Flag any resource > 50% of target device capacity
    → Target ≤ 60% overall to leave routing margin
 ```
