@@ -103,3 +103,15 @@ Entries are append-only. Never delete or modify existing entries.
 - **Approved by**: User
 - **Backup**: `.claude/upgrades/backups/instruction.md_20260323_nco.bak`
 - **Rollback**: Remove "### Expected Resource Usage (optional)" sub-section (between Target Configuration table and "## 6. Test Scenarios") from `src/.template/instruction.md`
+
+## [UPG-0008] Add vitis-run shell execution command to synth-sim skill — 2026-03-23
+- **Status**: Applied
+- **Trigger**: During `cfar_detector` design, the synth-sim execution step wasted time trying to source `settings64.sh` and locate `vitis_hls` binary directly. The correct command (`vitis-run --tcl`) was not documented anywhere in the environment.
+- **Target**: `.claude/skills/hls-synth-sim.md`
+- **Category**: Additive skill
+- **Priority**: HIGH
+- **Session**: cfar_detector / design-ip
+- **Summary**: Added "### Shell Execution" section to TCL Command Reference with `vitis-run --tcl` examples for csim, csynth, cosim, and a note to not use `vitis_hls` directly.
+- **Approved by**: User
+- **Backup**: `.claude/upgrades/backups/hls-synth-sim.md_20260323_173739.bak`
+- **Rollback**: Remove "### Shell Execution" section (between "### Execution" and "### Solution Comparison") from `.claude/skills/hls-synth-sim.md`

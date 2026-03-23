@@ -1,0 +1,181 @@
+
+
+================================================================
+== Vitis HLS Report for 'cfar_detector'
+================================================================
+* Date:           Mon Mar 23 17:23:05 2026
+
+* Version:        2025.2 (Build 6295257 on Nov 14 2025)
+* Project:        proj_cfar_detector
+* Solution:       sol1 (Vivado IP Flow Target)
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  |  10.00 ns|  6.772 ns|     2.70 ns|
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-------+---------+
+    |  Latency (cycles) |  Latency (absolute) |   Interval  | Pipeline|
+    |   min   |   max   |    min   |    max   | min |  max  |   Type  |
+    +---------+---------+----------+----------+-----+-------+---------+
+    |       68|    65566|  0.680 us|  0.656 ms|   69|  65567|       no|
+    +---------+---------+----------+----------+-----+-------+---------+
+
+    + Detail: 
+        * Instance: 
+        +--------------------------------------------+----------------------------------+---------+---------+----------+----------+-----+-----+-------------------+
+        |                                            |                                  |  Latency (cycles) |  Latency (absolute) |  Interval |      Pipeline     |
+        |                  Instance                  |              Module              |   min   |   max   |    min   |    max   | min | max |        Type       |
+        +--------------------------------------------+----------------------------------+---------+---------+----------+----------+-----+-----+-------------------+
+        |grp_cfar_detector_Pipeline_MAIN_LOOP_fu_96  |cfar_detector_Pipeline_MAIN_LOOP  |       65|    65563|  0.650 us|  0.656 ms|    0|    0|  loop pipeline stp|
+        +--------------------------------------------+----------------------------------+---------+---------+----------+----------+-----+-----+-------------------+
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+-----+--------+-------+-----+
+|       Name      | BRAM_18K| DSP |   FF   |  LUT  | URAM|
++-----------------+---------+-----+--------+-------+-----+
+|DSP              |        -|    -|       -|      -|    -|
+|Expression       |        -|    -|       0|     84|    -|
+|FIFO             |        -|    -|       -|      -|    -|
+|Instance         |        0|    3|    2378|   1575|    -|
+|Memory           |        -|    -|       -|      -|    -|
+|Multiplexer      |        -|    -|       0|     70|    -|
+|Register         |        -|    -|     172|      -|    -|
++-----------------+---------+-----+--------+-------+-----+
+|Total            |        0|    3|    2550|   1729|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Available        |      280|  220|  106400|  53200|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Utilization (%)  |        0|    1|       2|      3|    0|
++-----------------+---------+-----+--------+-------+-----+
+
++ Detail: 
+    * Instance: 
+    +--------------------------------------------+----------------------------------+---------+----+------+------+-----+
+    |                  Instance                  |              Module              | BRAM_18K| DSP|  FF  |  LUT | URAM|
+    +--------------------------------------------+----------------------------------+---------+----+------+------+-----+
+    |grp_cfar_detector_Pipeline_MAIN_LOOP_fu_96  |cfar_detector_Pipeline_MAIN_LOOP  |        0|   3|  2290|  1467|    0|
+    |ctrl_s_axi_U                                |ctrl_s_axi                        |        0|   0|    88|   108|    0|
+    +--------------------------------------------+----------------------------------+---------+----+------+------+-----+
+    |Total                                       |                                  |        0|   3|  2378|  1575|    0|
+    +--------------------------------------------+----------------------------------+---------+----+------+------+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +--------------------------------------------------------------+----------+----+---+----+------------+------------+
+    |                         Variable Name                        | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +--------------------------------------------------------------+----------+----+---+----+------------+------------+
+    |add_ln100_fu_151_p2                                           |         +|   0|  0|  10|           2|           2|
+    |add_ln111_fu_137_p2                                           |         +|   0|  0|  24|          17|           6|
+    |add_ln120_fu_144_p2                                           |         +|   0|  0|  24|          17|           2|
+    |total_iter_fu_130_p2                                          |         +|   0|  0|  24|          17|           5|
+    |grp_cfar_detector_Pipeline_MAIN_LOOP_fu_96_detect_out_TREADY  |       and|   0|  0|   2|           1|           1|
+    +--------------------------------------------------------------+----------+----+---+----+------------+------------+
+    |Total                                                         |          |   0|  0|  84|          54|          16|
+    +--------------------------------------------------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +-------------------------------+----+-----------+-----+-----------+
+    |              Name             | LUT| Input Size| Bits| Total Bits|
+    +-------------------------------+----+-----------+-----+-----------+
+    |ap_NS_fsm                      |  25|          5|    1|          5|
+    |detect_out_TDATA_int_regslice  |   9|          2|   64|        128|
+    |detect_out_TKEEP_int_regslice  |   9|          2|    8|         16|
+    |detect_out_TLAST_int_regslice  |   9|          2|    1|          2|
+    |detect_out_TSTRB_int_regslice  |   9|          2|    8|         16|
+    |power_in_TREADY_int_regslice   |   9|          2|    1|          2|
+    +-------------------------------+----+-----------+-----+-----------+
+    |Total                          |  70|         15|   83|        169|
+    +-------------------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +---------------------------------------------------------+----+----+-----+-----------+
+    |                           Name                          | FF | LUT| Bits| Const Bits|
+    +---------------------------------------------------------+----+----+-----+-----------+
+    |add_ln111_reg_186                                        |  17|   0|   17|          0|
+    |add_ln120_reg_191                                        |  17|   0|   17|          0|
+    |alpha_read_reg_176                                       |  16|   0|   16|          0|
+    |ap_CS_fsm                                                |   4|   0|    4|          0|
+    |cfar_mode_read_reg_171                                   |   2|   0|    2|          0|
+    |detect_out_TDATA_reg                                     |  64|   0|   64|          0|
+    |detect_out_TKEEP_reg                                     |   8|   0|    8|          0|
+    |detect_out_TLAST_reg                                     |   1|   0|    1|          0|
+    |detect_out_TSTRB_reg                                     |   8|   0|    8|          0|
+    |grp_cfar_detector_Pipeline_MAIN_LOOP_fu_96_ap_start_reg  |   1|   0|    1|          0|
+    |num_range_cells_read_reg_166                             |  16|   0|   16|          0|
+    |tmp_reg_196                                              |   1|   0|    1|          0|
+    |total_iter_reg_181                                       |  17|   0|   17|          0|
+    +---------------------------------------------------------+----+----+-----+-----------+
+    |Total                                                    | 172|   0|  172|          0|
+    +---------------------------------------------------------+----+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++--------------------+-----+-----+------------+---------------------+--------------+
+|      RTL Ports     | Dir | Bits|  Protocol  |    Source Object    |    C Type    |
++--------------------+-----+-----+------------+---------------------+--------------+
+|s_axi_ctrl_AWVALID  |   in|    1|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_AWREADY  |  out|    1|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_AWADDR   |   in|    6|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_WVALID   |   in|    1|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_WREADY   |  out|    1|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_WDATA    |   in|   32|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_WSTRB    |   in|    4|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_ARVALID  |   in|    1|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_ARREADY  |  out|    1|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_ARADDR   |   in|    6|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_RVALID   |  out|    1|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_RREADY   |   in|    1|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_RDATA    |  out|   32|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_RRESP    |  out|    2|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_BVALID   |  out|    1|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_BREADY   |   in|    1|       s_axi|                 ctrl|        scalar|
+|s_axi_ctrl_BRESP    |  out|    2|       s_axi|                 ctrl|        scalar|
+|ap_clk              |   in|    1|  ap_ctrl_hs|        cfar_detector|  return value|
+|ap_rst_n            |   in|    1|  ap_ctrl_hs|        cfar_detector|  return value|
+|interrupt           |  out|    1|  ap_ctrl_hs|        cfar_detector|  return value|
+|power_in_TDATA      |   in|   32|        axis|    power_in_V_data_V|       pointer|
+|power_in_TVALID     |   in|    1|        axis|    power_in_V_last_V|       pointer|
+|power_in_TREADY     |  out|    1|        axis|    power_in_V_last_V|       pointer|
+|power_in_TLAST      |   in|    1|        axis|    power_in_V_last_V|       pointer|
+|power_in_TKEEP      |   in|    4|        axis|    power_in_V_keep_V|       pointer|
+|power_in_TSTRB      |   in|    4|        axis|    power_in_V_strb_V|       pointer|
+|detect_out_TDATA    |  out|   64|        axis|  detect_out_V_data_V|       pointer|
+|detect_out_TVALID   |  out|    1|        axis|  detect_out_V_last_V|       pointer|
+|detect_out_TREADY   |   in|    1|        axis|  detect_out_V_last_V|       pointer|
+|detect_out_TLAST    |  out|    1|        axis|  detect_out_V_last_V|       pointer|
+|detect_out_TKEEP    |  out|    8|        axis|  detect_out_V_keep_V|       pointer|
+|detect_out_TSTRB    |  out|    8|        axis|  detect_out_V_strb_V|       pointer|
++--------------------+-----+-----+------------+---------------------+--------------+
+

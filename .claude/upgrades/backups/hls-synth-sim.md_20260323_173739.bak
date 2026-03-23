@@ -31,27 +31,6 @@ export_design -format ip_catalog    ;# Export as Vivado IP
 export_design -format xo            ;# Export as Vitis .xo file
 ```
 
-### Shell Execution
-
-To run a TCL script from the command line, use `vitis-run`:
-
-```bash
-# cd to the IP directory first
-cd src/<ip_name>/
-
-# C-Simulation
-vitis-run --tcl tcl/run_csim.tcl
-
-# C-Synthesis
-vitis-run --tcl tcl/run_csynth.tcl
-
-# Co-Simulation
-vitis-run --tcl tcl/run_cosim.tcl
-```
-
-> **Note**: Do NOT invoke `vitis_hls` directly or source `settings64.sh` manually.
-> `vitis-run` is the correct entry point for batch TCL execution.
-
 ### Solution Comparison
 ```tcl
 # Create multiple solutions with different optimizations
