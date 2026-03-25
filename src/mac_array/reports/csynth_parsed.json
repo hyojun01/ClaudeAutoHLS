@@ -1,0 +1,131 @@
+{
+  "report_version": "2025.2",
+  "design": {
+    "part": "xc7z020-clg400-1",
+    "product_family": "zynq",
+    "top_function": "mac_array",
+    "target_clock_ns": 10.0,
+    "clock_uncertainty_ns": 2.7,
+    "flow_target": "vivado"
+  },
+  "timing": {
+    "target_ns": 10.0,
+    "estimated_ns": 6.283,
+    "slack_ns": 3.717,
+    "met": true
+  },
+  "latency": {
+    "pipeline_type": "none",
+    "best_cycles": 30,
+    "average_cycles": 2077,
+    "worst_cycles": 4125,
+    "best_time": "0.300 us",
+    "average_time": "20.770 us",
+    "worst_time": "41.250 us",
+    "interval_min": 31,
+    "interval_max": 4126,
+    "dataflow_throughput_cycles": null
+  },
+  "loops": [],
+  "resources": {
+    "bram": {
+      "used": 0,
+      "available": 280,
+      "util_pct": 0.0
+    },
+    "dsp": {
+      "used": 16,
+      "available": 220,
+      "util_pct": 7.3
+    },
+    "ff": {
+      "used": 757,
+      "available": 106400,
+      "util_pct": 0.7
+    },
+    "lut": {
+      "used": 850,
+      "available": 53200,
+      "util_pct": 1.6
+    },
+    "uram": {
+      "used": 0,
+      "available": 0,
+      "util_pct": 0.0
+    }
+  },
+  "interfaces": [
+    {
+      "name": "act_in",
+      "protocol": "axis",
+      "direction": "both",
+      "data_width": 32,
+      "signals": [
+        "TDATA",
+        "TKEEP",
+        "TLAST",
+        "TREADY",
+        "TSTRB",
+        "TVALID"
+      ]
+    },
+    {
+      "name": "result_out",
+      "protocol": "axis",
+      "direction": "both",
+      "data_width": 32,
+      "signals": [
+        "TDATA",
+        "TKEEP",
+        "TLAST",
+        "TREADY",
+        "TSTRB",
+        "TVALID"
+      ]
+    },
+    {
+      "name": "weight_in",
+      "protocol": "axis",
+      "direction": "both",
+      "data_width": 32,
+      "signals": [
+        "TDATA",
+        "TKEEP",
+        "TLAST",
+        "TREADY",
+        "TSTRB",
+        "TVALID"
+      ]
+    },
+    {
+      "name": "ctrl",
+      "protocol": "s_axi",
+      "direction": "both",
+      "data_width": 32,
+      "signals": [
+        "ARADDR",
+        "ARREADY",
+        "ARVALID",
+        "AWADDR",
+        "AWREADY",
+        "AWVALID",
+        "BREADY",
+        "BRESP",
+        "BVALID",
+        "RDATA",
+        "RREADY",
+        "RRESP",
+        "RVALID",
+        "WDATA",
+        "WREADY",
+        "WSTRB",
+        "WVALID"
+      ]
+    }
+  ],
+  "violations": {
+    "timing_violation": false,
+    "details": []
+  },
+  "source_file": "/home/kmuws/Claude_Auto_HLS/src/mac_array/proj_mac_array/sol1/syn/report/csynth.xml"
+}
