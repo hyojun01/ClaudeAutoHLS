@@ -1,0 +1,108 @@
+
+
+================================================================
+== Synthesis Summary Report of 'cic_decimator'
+================================================================
++ General Information: 
+    * Date:           Wed Mar 25 14:06:58 2026
+    * Version:        2025.2 (Build 6295257 on Nov 14 2025)
+    * Project:        proj_cic_decimator
+    * Solution:       sol1 (Vivado IP Flow Target)
+    * Product family: zynq
+    * Target device:  xc7z020-clg400-1
+    
+
+* Performance & Resource Estimates: 
++-----------------+------+---------------+----------+---------+------+----------+---------+--------+------+------+----+-----------+-----------+-----+
+|     Modules     | Issue|               | Iteration|         | Trip |          |      Latency     |      |      |    |           |           |     |
+|     & Loops     | Type | Violation Type|  Latency | Interval| Count| Pipelined| (cycles)|  (ns)  | Slack| BRAM | DSP|     FF    |    LUT    | URAM|
++-----------------+------+---------------+----------+---------+------+----------+---------+--------+------+------+----+-----------+-----------+-----+
+|+ cic_decimator  |     -|              -|         -|        1|     -|       yes|        5|  50.000|  0.38|     -|   -|  393 (~0%)|  485 (~0%)|    -|
++-----------------+------+---------------+----------+---------+------+----------+---------+--------+------+------+----+-----------+-----------+-----+
+    Name Prefix: '+' for module, 'o' for loop, '*' for dataflow
+
+
+================================================================
+== HW Interfaces
+================================================================
+* AXIS
++-----------+-----------+---------------+-------+-------+-------+--------+-------+--------+
+| Interface | Direction | Register Mode | TDATA | TKEEP | TLAST | TREADY | TSTRB | TVALID |
++-----------+-----------+---------------+-------+-------+-------+--------+-------+--------+
+| din       | in        | both          | 16    | 2     | 1     | 1      | 2     | 1      |
+| dout      | out       | both          | 16    | 2     | 1     | 1      | 2     | 1      |
++-----------+-----------+---------------+-------+-------+-------+--------+-------+--------+
+
+* TOP LEVEL CONTROL
++-----------+--------------+----------+
+| Interface | Type         | Ports    |
++-----------+--------------+----------+
+| ap_clk    | clock        | ap_clk   |
+| ap_rst_n  | reset        | ap_rst_n |
+| ap_ctrl   | ap_ctrl_none |          |
++-----------+--------------+----------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+------------------------------------------------------------------------------+
+| Argument | Direction | Datatype                                                                     |
++----------+-----------+------------------------------------------------------------------------------+
+| din      | in        | stream<hls::axis<ap_uint<16>, 0UL, 0UL, 0UL, (unsigned char)'8', false>, 0>& |
+| dout     | out       | stream<hls::axis<ap_uint<16>, 0UL, 0UL, 0UL, (unsigned char)'8', false>, 0>& |
++----------+-----------+------------------------------------------------------------------------------+
+
+* SW-to-HW Mapping
++----------+--------------+-----------+
+| Argument | HW Interface | HW Type   |
++----------+--------------+-----------+
+| din      | din          | interface |
+| dout     | dout         | interface |
++----------+--------------+-----------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++------------------------+-----+--------+------------+-------+--------+---------+
+| Name                   | DSP | Pragma | Variable   | Op    | Impl   | Latency |
++------------------------+-----+--------+------------+-------+--------+---------+
+| + cic_decimator        | 0   |        |            |       |        |         |
+|   or_ln60_fu_158_p2    |     |        | or_ln60    | or    | auto   | 0       |
+|   add_ln69_fu_169_p2   |     |        | add_ln69   | add   | fabric | 0       |
+|   add_ln71_fu_179_p2   |     |        | add_ln71   | add   | fabric | 0       |
+|   add_ln71_1_fu_230_p2 |     |        | add_ln71_1 | add   | fabric | 0       |
+|   comb_in_fu_239_p2    |     |        | comb_in    | add   | fabric | 0       |
+|   decimate_fu_201_p2   |     |        | decimate   | seteq | auto   | 0       |
+|   add_ln116_fu_207_p2  |     |        | add_ln116  | add   | fabric | 0       |
+|   comb_out_fu_261_p2   |     |        | comb_out   | sub   | fabric | 0       |
+|   comb_out_1_fu_270_p2 |     |        | comb_out_1 | sub   | fabric | 0       |
+|   comb_out_2_fu_291_p2 |     |        | comb_out_2 | sub   | fabric | 0       |
++------------------------+-----+--------+------------+-------+--------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
+  No bind storage info in design
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++-----------------+-----------------------------------+---------------------------------------------+
+| Type            | Options                           | Location                                    |
++-----------------+-----------------------------------+---------------------------------------------+
+| INTERFACE       | ap_ctrl_none port=return          | in cic_decimator (src/cic_decimator.cpp:28) |
+| INTERFACE       | axis port=din                     | in cic_decimator (src/cic_decimator.cpp:31) |
+| INTERFACE       | axis port=dout                    | in cic_decimator (src/cic_decimator.cpp:32) |
+| PIPELINE        | ii=1 style=flp                    | in cic_decimator (src/cic_decimator.cpp:36) |
+| ARRAY_PARTITION | variable=integrator type=complete | in cic_decimator (src/cic_decimator.cpp:41) |
+| ARRAY_PARTITION | variable=comb_delay type=complete | in cic_decimator (src/cic_decimator.cpp:45) |
+| UNROLL          |                                   | in cic_decimator (src/cic_decimator.cpp:67) |
+| UNROLL          |                                   | in cic_decimator (src/cic_decimator.cpp:88) |
++-----------------+-----------------------------------+---------------------------------------------+
+
+
